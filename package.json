@@ -1,0 +1,12 @@
+{
+  "name": "algorithm_learning",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JavaScript algorithm learning course for frontend engineers.",
+  "scripts": {
+    "day1": "node day1/work.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
