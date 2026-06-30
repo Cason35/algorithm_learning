@@ -17,7 +17,11 @@ const assert = require("node:assert/strict");
  */
 function reverseString(s) {
   // TODO: 从后往前读取字符，拼出一个新字符串
-  return "";
+  let result = "";
+  for (let i = s.length - 1; i >= 0; i--) {
+    result += s[i];
+  }
+  return result;
 }
 
 /**
@@ -36,7 +40,17 @@ function reverseString(s) {
  */
 function isValidPalindrome(s) {
   // TODO: 先清洗字符串，只保留字母和数字并统一小写，再判断是否回文
-  return false;
+  let cleaned = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  let left = 0;
+  let right = cleaned.length - 1;
+  while (left < right) {
+    if (cleaned[left] !== cleaned[right]) {
+      return false;
+    }
+    left++;
+    right--;
+  }
+  return true;
 }
 
 /**
@@ -56,7 +70,16 @@ function isValidPalindrome(s) {
  */
 function longestCommonPrefix(strs) {
   // TODO: 用第一个字符串作为候选前缀，逐个和后面的字符串比较
-  return "";
+  if (strs.length === 0) {
+    return "";
+  }
+  let prefix = strs[0];
+  for (let i = 1; i < strs.length; i++) {
+    while (!strs[i].startsWith(prefix)) {
+      prefix = prefix.slice(0, -1);
+    }
+  }
+  return prefix;
 }
 
 /**
@@ -75,7 +98,18 @@ function longestCommonPrefix(strs) {
  */
 function compressRuns(s) {
   // TODO: 扫描字符串，记录当前连续字符和出现次数
-  return "";
+  let result = "";
+  let count = 1;
+  for (let i = 1; i <= s.length; i++) {
+    if (s[i] === s[i - 1]) {
+      count++;
+    }
+    else {
+      result += s[i - 1] + count;
+      count = 1;
+    }
+  }
+  return result;
 }
 
 const tests = [
