@@ -64,6 +64,7 @@
 npm run day1
 npm run day2
 npm run day3
+npm run day4
 ```
 
 或者直接：
@@ -72,6 +73,7 @@ npm run day3
 node day1/work.js
 node day2/work.js
 node day3/work.js
+node day4/work.js
 ```
 
 第一次运行通常会失败，因为函数里留了 TODO。你完成实现后再运行，全部通过后告诉我：

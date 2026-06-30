@@ -6,7 +6,8 @@
   "scripts": {
     "day1": "node day1/work.js",
     "day2": "node day2/work.js",
-    "day3": "node day3/work.js"
+    "day3": "node day3/work.js",
+    "day4": "node day4/work.js"
   },
   "engines": {
     "node": ">=18"
