@@ -4,7 +4,8 @@
   "private": true,
   "description": "JavaScript algorithm learning course for frontend engineers.",
   "scripts": {
-    "day1": "node day1/work.js"
+    "day1": "node day1/work.js",
+    "day2": "node day2/work.js"
   },
   "engines": {
     "node": ">=18"
