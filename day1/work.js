@@ -16,6 +16,15 @@ const assert = require("node:assert/strict");
  */
 function twoSum(nums, target) {
   // TODO: 用 Map 保存“已经见过的数字 -> 下标”
+  const map = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    const num = nums[i];
+    const complement = target - num;
+    if (map.has(complement)) {
+      return [map.get(complement), i];
+    }
+    map.set(num, i);
+  }
   return [];
 }
 
@@ -29,6 +38,13 @@ function twoSum(nums, target) {
  */
 function containsDuplicate(nums) {
   // TODO: 用 Set 判断数字是否出现过
+  const set = new Set();
+  for (const num of nums) {
+    if (set.has(num)) {
+      return true;
+    }
+    set.add(num);
+  }
   return false;
 }
 
@@ -46,7 +62,23 @@ function containsDuplicate(nums) {
  */
 function isAnagram(s, t) {
   // TODO: 用 Map 统计字符出现次数
-  return false;
+  const mapS = new Map();
+  for (const char of s) {
+    mapS.set(char, (mapS.get(char) || 0) + 1);
+  }
+  const mapT = new Map();
+  for (const char of t) {
+    mapT.set(char, (mapT.get(char) || 0) + 1);
+  }
+  if (mapS.size !== mapT.size) {
+    return false;
+  }
+  for (const [char, count] of mapS) {
+    if (mapT.get(char) !== count) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
@@ -63,6 +95,15 @@ function isAnagram(s, t) {
  */
 function firstUniqueCharIndex(s) {
   // TODO: 先统计次数，再从左到右找第一个次数为 1 的字符
+  const map = new Map();
+  for (const char of s) {
+    map.set(char, (map.get(char) || 0) + 1);
+  }
+  for (let i = 0; i < s.length; i++) {
+    if (map.get(s[i]) === 1) {
+      return i;
+    }
+  }
   return -1;
 }
 
