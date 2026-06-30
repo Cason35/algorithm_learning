@@ -5,6 +5,10 @@ const assert = require("node:assert/strict");
 /**
  * 任务 1：两数之和
  *
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ *
  * 给定一个整数数组 nums 和目标值 target，返回两个数的下标，
  * 使它们相加等于 target。
  *
@@ -31,6 +35,9 @@ function twoSum(nums, target) {
 /**
  * 任务 2：是否存在重复元素
  *
+ * @param {number[]} nums
+ * @return {boolean}
+ *
  * 如果 nums 中任意一个值出现至少两次，返回 true；
  * 如果每个元素都不相同，返回 false。
  *
@@ -50,6 +57,10 @@ function containsDuplicate(nums) {
 
 /**
  * 任务 3：有效的异位词
+ *
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
  *
  * 如果字符串 s 和 t 中每个字符出现的次数都相同，返回 true；
  * 否则返回 false。
@@ -83,6 +94,9 @@ function isAnagram(s, t) {
 
 /**
  * 任务 4：第一个只出现一次的字符
+ *
+ * @param {string} s
+ * @return {number}
  *
  * 给定字符串 s，返回第一个只出现一次的字符下标。
  * 如果不存在，返回 -1。

@@ -5,6 +5,10 @@ const assert = require("node:assert/strict");
 /**
  * 任务 1：移除元素
  *
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ *
  * 给定数组 nums 和值 val，原地移除所有等于 val 的元素。
  * 返回移除后数组的有效长度 k。
  *
@@ -21,11 +25,21 @@ const assert = require("node:assert/strict");
  */
 function removeElement(nums, val) {
   // TODO: 用 write 指针记录下一个有效元素应该放的位置
-  return 0;
+  let write = 0;
+  for (let read = 0; read < nums.length; read++) {
+    if (nums[read] !== val) {
+      nums[write] = nums[read];
+      write++;
+    }
+  }
+  return write;
 }
 
 /**
  * 任务 2：移动零
+ *
+ * @param {number[]} nums
+ * @return {void}
  *
  * 给定数组 nums，原地将所有 0 移动到数组末尾，
  * 同时保持非零元素的相对顺序。
@@ -37,10 +51,23 @@ function removeElement(nums, val) {
  */
 function moveZeroes(nums) {
   // TODO: 先把非零元素写到前面，再把剩余位置补 0
+  let write = 0;
+  for (let read = 0; read < nums.length; read++) {
+    if (nums[read] !== 0) {
+      nums[write] = nums[read];
+      write++;
+    }
+  }
+  for (let i = write; i < nums.length; i++) {
+    nums[i] = 0;
+  }
 }
 
 /**
  * 任务 3：删除有序数组中的重复项
+ *
+ * @param {number[]} nums
+ * @return {number}
  *
  * 给定一个非递减排序数组 nums，原地删除重复出现的元素，
  * 使每个元素只出现一次，返回删除后数组的新长度 k。
@@ -56,11 +83,25 @@ function moveZeroes(nums) {
  */
 function removeDuplicatesSorted(nums) {
   // TODO: 用 write 指针保存下一个不重复元素的位置
-  return 0;
+  let write = 0;
+  for (let read = 0; read < nums.length; read++) {
+    // 有序数组里，重复项一定相邻；和上一个不同就是新的不重复元素
+    if (read === 0 || nums[read] !== nums[read - 1]) {
+      nums[write] = nums[read];
+      write++;
+    }
+  }
+  return write;
 }
 
 /**
  * 任务 4：合并两个有序数组
+ *
+ * @param {number[]} nums1
+ * @param {number} m
+ * @param {number[]} nums2
+ * @param {number} n
+ * @return {void}
  *
  * nums1 的长度是 m + n，其中前 m 个元素有效，后 n 个位置为占位。
  * nums2 的长度是 n。
@@ -78,6 +119,25 @@ function removeDuplicatesSorted(nums) {
  */
 function mergeSortedArrays(nums1, m, nums2, n) {
   // TODO: 使用三个指针：i 指向 nums1 有效区末尾，j 指向 nums2 末尾，write 指向 nums1 总末尾
+  let i = m - 1;
+  let j = n - 1;
+  let write = m + n - 1;
+  while (i >= 0 && j >= 0) {
+    if (nums1[i] > nums2[j]) {
+      nums1[write] = nums1[i];
+      i--;
+    }
+    else {
+      nums1[write] = nums2[j];
+      j--;
+    }
+    write--;
+  }
+  while (j >= 0) {
+    nums1[write] = nums2[j];
+    j--;
+    write--;
+  }
 }
 
 function assertPrefix(actualArray, k, expectedPrefix) {
