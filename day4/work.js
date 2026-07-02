@@ -24,6 +24,17 @@ const assert = require("node:assert/strict");
  */
 function twoSumSorted(nums, target) {
   // TODO: 用 left / right 从两端向中间收缩
+  let left = 0;
+  let right = nums.length - 1;
+  while (left < right) {
+    if (nums[left] + nums[right] === target) {
+      return [left, right];
+    } else if (nums[left] + nums[right] < target) {
+      left++;
+    } else {
+      right--;
+    }
+  }
   return [-1, -1];
 }
 
@@ -47,7 +58,16 @@ function twoSumSorted(nums, target) {
  */
 function isPalindromeTwoPointers(s) {
   // TODO: left 从头开始，right 从尾开始，两端字符逐个比较
-  return false;
+  let left = 0;
+  let right = s.length - 1;
+  while (left < right) {
+    if (s[left] !== s[right]) {
+      return false;
+    }
+    left++;
+    right--;
+  }
+  return true;
 }
 
 /**
@@ -65,6 +85,13 @@ function isPalindromeTwoPointers(s) {
  */
 function reverseArrayInPlace(nums) {
   // TODO: 用左右指针交换元素
+  let left = 0;
+  let right = nums.length - 1;
+  while (left < right) {
+    [nums[left], nums[right]] = [nums[right], nums[left]];
+    left++;
+    right--;
+  }
 }
 
 /**
@@ -87,7 +114,23 @@ function reverseArrayInPlace(nums) {
  */
 function sortedSquares(nums) {
   // TODO: 用 left / right 比较两端绝对值，把较大平方写到结果数组末尾
-  return [];
+  let left = 0;
+  let right = nums.length - 1;
+  const result = new Array(nums.length);
+  let write = nums.length - 1;
+
+  while (left <= right) {
+    if (Math.abs(nums[left]) > Math.abs(nums[right])) {
+      result[write] = nums[left] * nums[left];
+      left++;
+    } else {
+      result[write] = nums[right] * nums[right];
+      right--;
+    }
+    write--;
+  }
+
+  return result;
 }
 
 function assertTwoSumSorted(actual, nums, target, expected) {
@@ -107,7 +150,7 @@ const tests = [
   },
   {
     name: "twoSumSorted: includes negative numbers",
-    run: () => assertTwoSumSorted(twoSumSorted([-3, -1, 0, 2, 4, 6], 3), [-3, -1, 0, 2, 4, 6], 3, [1, 5]),
+    run: () => assertTwoSumSorted(twoSumSorted([-3, -1, 0, 2, 4, 6], 3), [-3, -1, 0, 2, 4, 6], 3, [0, 5]),
   },
   {
     name: "twoSumSorted: no answer",
