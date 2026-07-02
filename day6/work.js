@@ -18,7 +18,11 @@ const assert = require("node:assert/strict");
  */
 function buildPrefixSums(nums) {
   // TODO: prefix[i + 1] = prefix[i] + nums[i]
-  return [];
+  let prefixSums = [0];
+  for (let i = 0; i < nums.length; i++) {
+    prefixSums.push(prefixSums[i] + nums[i]);
+  }
+  return prefixSums;
 }
 
 /**
@@ -38,7 +42,8 @@ function buildPrefixSums(nums) {
  */
 function rangeSum(nums, left, right) {
   // TODO: 先构建前缀和，再用 prefix[right + 1] - prefix[left]
-  return 0;
+  let prefixSums = buildPrefixSums(nums);
+  return prefixSums[right + 1] - prefixSums[left];
 }
 
 /**
