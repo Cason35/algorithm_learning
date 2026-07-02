@@ -19,7 +19,25 @@ const assert = require("node:assert/strict");
  */
 function maxSumFixedWindow(nums, k) {
   // TODO: 先计算第一个窗口和，再每次加右边新元素、减左边旧元素
-  return 0;
+  if (k <= 0 || k > nums.length) {
+    return 0;
+  }
+  let left = 0;
+  let right = k - 1;
+  let currentSum = 0;
+  for (let i = 0; i < k; i++) {
+    currentSum += nums[i];
+  }
+  let maxSum = currentSum;
+  left++;
+  right++;
+  while (right < nums.length) {
+    currentSum += nums[right] - nums[left - 1];
+    maxSum = Math.max(maxSum, currentSum);
+    left++;
+    right++;
+  }
+  return maxSum;
 }
 
 /**
@@ -38,7 +56,24 @@ function maxSumFixedWindow(nums, k) {
  */
 function lengthOfLongestSubstring(s) {
   // TODO: 用 Set 维护当前窗口内的字符，遇到重复时移动 left
-  return 0;
+  if (s.length === 0) {
+    return 0;
+  }
+  let left = 0;
+  let right = 0;
+  let maxLength = 0;
+  const charSet = new Set();
+  while (right < s.length) {
+    if (charSet.has(s[right])) {
+      charSet.delete(s[left]);
+      left++;
+    } else {
+      charSet.add(s[right]);
+      maxLength = Math.max(maxLength, right - left + 1);
+      right++;
+    }
+  }
+  return maxLength;
 }
 
 /**
@@ -59,7 +94,23 @@ function lengthOfLongestSubstring(s) {
  */
 function minSubArrayLen(target, nums) {
   // TODO: right 扩大窗口累加和；当 sum >= target 时移动 left 缩短窗口
-  return 0;
+  if (nums.length === 0) {
+    return 0;
+  }
+  let left = 0;
+  let right = 0;
+  let minLength = Infinity;
+  let sum = 0;
+  while (right < nums.length) {
+    sum += nums[right];
+    while (sum >= target) {
+      minLength = Math.min(minLength, right - left + 1);
+      sum -= nums[left];
+      left++;
+    }
+    right++;
+  }
+  return minLength === Infinity ? 0 : minLength;
 }
 
 /**
@@ -79,7 +130,32 @@ function minSubArrayLen(target, nums) {
  */
 function findAnagramIndices(s, p) {
   // TODO: 用固定长度窗口维护 26 个小写字母的频次差异
-  return [];
+  if (p.length === 0 || p.length > s.length) return [];
+
+  const base = "a".charCodeAt(0);
+  const need = new Array(26).fill(0);
+  const window = new Array(26).fill(0);
+  const result = [];
+
+  for (let i = 0; i < p.length; i++) {
+    need[p.charCodeAt(i) - base]++;
+    window[s.charCodeAt(i) - base]++;
+  }
+
+  if (window.every((count, index) => count === need[index])) {
+    result.push(0);
+  }
+
+  for (let right = p.length; right < s.length; right++) {
+    window[s.charCodeAt(right) - base]++;
+    window[s.charCodeAt(right - p.length) - base]--;
+
+    if (window.every((count, index) => count === need[index])) {
+      result.push(right - p.length + 1);
+    }
+  }
+
+  return result;
 }
 
 const tests = [
