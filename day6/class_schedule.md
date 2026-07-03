@@ -189,3 +189,45 @@ npm run day6
 5. 如果是差分，变化点在哪里？
 
 你写完后告诉我，我会批改 Day 6，并把总结追加到这里。
+
+## 9. 批改总结（2026-07-03）
+
+### 自测结果
+
+`npm run day6` 通过：`12/12 tests passed`。
+
+### 掌握情况
+
+你已经掌握了 Day 6 的核心：用前缀和把连续区间问题转成“两个累计值相减”，再用哈希表统计历史前缀和。
+
+四个函数的完成情况：
+
+1. `buildPrefixSums(nums)`：通过。你保留了 `prefix[0] = 0`，并用 `prefix[i] + nums[i]` 推出下一项，结构正确。
+2. `rangeSum(nums, left, right)`：通过。公式 `prefix[right + 1] - prefix[left]` 用得准确。
+3. `countSubarraysWithSum(nums, k)`：通过。你先放入 `map.set(0, 1)`，可以正确处理从下标 0 开始的子数组；扫描时查 `sum - k`，这是这题最关键的转换。
+4. `applyRangeUpdates(length, updates)`：通过。你用差分思想处理区间加法，起点加 `value`，`right + 1` 位置减 `value`，最后再做一次前缀还原最终数组。
+
+### 可以继续优化的点
+
+`applyRangeUpdates` 里的 `arr` 实际上是差分数组，可以命名为 `diff`，这样讲题时更贴近概念。
+
+当前做法用 `buildPrefixSums(arr).slice(1)` 还原结果，逻辑正确。也可以直接原地累加 `diff` 得到结果，少创建一个长度为 `length + 1` 的前缀数组，不过这不是必须优化。
+
+`rangeSum` 每次调用都会构建一次前缀和。单次查询没问题；如果题目变成“多次查询区间和”，更好的做法是先构建一次 `prefix`，后续每次查询都 `O(1)`。
+
+### 今天真正学到的东西
+
+前缀和题最重要的是把“连续区间”翻译成公式：
+
+```text
+sum(left, right) = prefix[right + 1] - prefix[left]
+```
+
+统计子数组数量时，再进一步翻译：
+
+```text
+currentPrefix - previousPrefix = k
+previousPrefix = currentPrefix - k
+```
+
+差分数组则是反过来思考：不直接改整段区间，而是只记录“从哪里开始变化”和“从哪里结束变化”。

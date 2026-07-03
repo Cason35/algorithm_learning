@@ -62,7 +62,18 @@ function rangeSum(nums, left, right) {
  */
 function countSubarraysWithSum(nums, k) {
   // TODO: 用 Map 记录前缀和出现次数，扫描时寻找 currentSum - k
-  return 0;
+  const map = new Map();
+  map.set(0, 1);
+  let sum = 0;
+  let count = 0;
+  for (const num of nums) {
+    sum += num;
+    if (map.has(sum - k)) {
+      count += map.get(sum - k);
+    }
+    map.set(sum, (map.get(sum) || 0) + 1);
+  }
+  return count;
 }
 
 /**
@@ -84,7 +95,16 @@ function countSubarraysWithSum(nums, k) {
  */
 function applyRangeUpdates(length, updates) {
   // TODO: 使用差分数组，区间起点加 value，right + 1 位置减 value
-  return [];
+  let arr = new Array(length).fill(0);
+  for (let i = 0; i < updates.length; i++) {
+    let [left, right, value] = updates[i];
+    arr[left] += value;
+    if (right + 1 < length) {
+      arr[right + 1] -= value;
+    }
+  }
+  let prefixSums = buildPrefixSums(arr);
+  return prefixSums.slice(1);
 }
 
 const tests = [
