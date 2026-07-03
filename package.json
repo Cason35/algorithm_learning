@@ -9,7 +9,8 @@
     "day3": "node day3/work.js",
     "day4": "node day4/work.js",
     "day5": "node day5/work.js",
-    "day6": "node day6/work.js"
+    "day6": "node day6/work.js",
+    "day7": "node day7/work.js"
   },
   "engines": {
     "node": ">=18"
