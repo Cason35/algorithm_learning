@@ -166,3 +166,65 @@ npm run day7
 5. 时间复杂度和空间复杂度是多少？
 
 你写完后告诉我，我会批改 Day 7，并把第一周总结追加到这里。
+
+## 6. 批改总结（2026-07-03）
+
+### 自测结果
+
+`npm run day7` 通过：`12/12 tests passed`。
+
+### 掌握情况
+
+第一周复盘题整体完成得不错。你已经能根据题目信号选择对应工具，而不是只套某一天的模板。
+
+四个函数的完成情况：
+
+1. `dedupeStable(nums)`：通过。你用 `Set` 记录出现过的数字，用 `result` 保存首次出现顺序，时间复杂度 `O(n)`，空间复杂度 `O(n)`。
+2. `isCleanPalindrome(s)`：功能通过，但空间复杂度没有达标。你先构造了 `cleaned` 字符串，这会额外使用 `O(n)` 空间；题目目标是 `O(1)`，希望直接用左右指针跳过无效字符。
+3. `longestSubstringAtMostKDistinct(s, k)`：通过。你用 `Map` 维护窗口内字符频次，超过 `k` 种字符时移动 `left` 收缩窗口，滑动窗口思路正确。
+4. `countEqualZeroOneSubarrays(nums)`：通过。你把 `0` 转成 `-1`，把问题转成“和为 0 的子数组数量”，再用前缀和 + `Map` 统计，转换很准确。
+
+### 需要二次修改的点
+
+`isCleanPalindrome` 不要先生成清洗后的字符串。可以写一个字符判断函数，然后让左右指针直接在原字符串上移动：
+
+```js
+function isAlphaNumeric(char) {
+  return /^[a-z0-9]$/i.test(char);
+}
+```
+
+核心移动规则：
+
+```js
+while (left < right && !isAlphaNumeric(s[left])) left++;
+while (left < right && !isAlphaNumeric(s[right])) right--;
+```
+
+比较时再统一大小写：
+
+```js
+if (s[left].toLowerCase() !== s[right].toLowerCase()) return false;
+```
+
+这样就不需要 `cleaned` 字符串，额外空间可以保持 `O(1)`。
+
+### 第一周小结
+
+这一周最重要的进步是：你开始能把题目信号和算法工具连接起来。
+
+- 出现次数、去重、历史状态：想哈希表。
+- 原地修改和有效区域：想读写指针。
+- 两端比较和有序配对：想双指针。
+- 连续区间的最长/最短：想滑动窗口。
+- 区间和与累计状态：想前缀和。
+
+下一步要继续练的是“复杂度敏感度”：代码跑过样例只是第一层，是否达到题目要求的时间/空间复杂度才是面试里的关键。
+
+### 二次修改复批
+
+二次修改后再次运行 `npm run day7`，结果通过：`12/12 tests passed`。
+
+`isCleanPalindrome(s)` 已经从“先创建 `cleaned` 字符串”改成了“直接在原字符串上用左右指针跳过无效字符”。这样不再额外保存清洗后的字符串，空间复杂度从 `O(n)` 降到 `O(1)`。
+
+当前实现已经达标。可以继续打磨的小点：把 `/^[a-zA-Z0-9]$/.test(char)` 抽成一个 `isAlphaNumeric(char)` 小函数，代码会更容易讲，也避免在循环里重复写正则表达式。

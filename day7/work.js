@@ -17,7 +17,15 @@ const assert = require("node:assert/strict");
  */
 function dedupeStable(nums) {
   // TODO: 用 Set 记录已经出现过的数字，用数组保存结果
-  return [];
+  let set = new Set();
+  let result = [];
+  for (let i = 0; i < nums.length; i++) {
+    if (!set.has(nums[i])) {
+      set.add(nums[i]);
+      result.push(nums[i]);
+    }
+  }
+  return result;
 }
 
 /**
@@ -35,7 +43,22 @@ function dedupeStable(nums) {
  */
 function isCleanPalindrome(s) {
   // TODO: 用左右指针；遇到非字母数字字符就跳过
-  return false;
+  let left = 0;
+  let right = s.length - 1;
+  while (left < right) {
+    while (left < right && !/^[a-zA-Z0-9]$/.test(s[left])) {
+      left++;
+    }
+    while (left < right && !/^[a-zA-Z0-9]$/.test(s[right])) {
+      right--;
+    }
+    if (s[left].toLowerCase() !== s[right].toLowerCase()) {
+      return false;
+    }
+    left++;
+    right--;
+  }
+  return true;
 }
 
 /**
@@ -54,7 +77,25 @@ function isCleanPalindrome(s) {
  */
 function longestSubstringAtMostKDistinct(s, k) {
   // TODO: 用滑动窗口 + Map 维护窗口内每个字符的出现次数
-  return 0;
+  let map = new Map();
+  let left = 0;
+  let right = 0;
+  let maxLength = 0;
+  while (right < s.length) {
+    if (map.size <= k) {
+      map.set(s[right], (map.get(s[right]) || 0) + 1);
+      right++;
+      while (map.size > k) {
+        map.set(s[left], map.get(s[left]) - 1);
+        if (map.get(s[left]) === 0) {
+          map.delete(s[left]);
+        }
+        left++;
+      }
+      maxLength = Math.max(maxLength, right - left);
+    }
+  }
+  return maxLength;
 }
 
 /**
@@ -77,7 +118,15 @@ function longestSubstringAtMostKDistinct(s, k) {
  */
 function countEqualZeroOneSubarrays(nums) {
   // TODO: 用前缀和 + Map 统计相同前缀和出现次数
-  return 0;
+  let count = 0;
+  let prefixSum = 0;
+  let map = new Map([[0, 1]]);
+  for (const num of nums) {
+    prefixSum += num === 0 ? -1 : 1;
+    count += map.get(prefixSum) || 0;  // 先累加「之前见过几次相同前缀和」
+    map.set(prefixSum, (map.get(prefixSum) || 0) + 1);  // 再更新 map
+  }
+  return count;
 }
 
 const tests = [
