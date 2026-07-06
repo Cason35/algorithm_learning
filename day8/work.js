@@ -18,7 +18,21 @@ const assert = require("node:assert/strict");
  */
 function isValidParentheses(s) {
   // TODO: 左括号入栈，右括号检查并弹出对应左括号
-  return false;
+  let leftBrackets = ['(', '[', '{'];
+  let rightBrackets = [')', ']', '}'];
+  let stack = [];
+  for (let i = 0; i < s.length; i++) {
+    if (leftBrackets.includes(s[i])) {
+      stack.push(s[i]);
+    } else if (rightBrackets.includes(s[i])) {
+      if (leftBrackets.indexOf(stack[stack.length - 1]) === rightBrackets.indexOf(s[i])) {
+        stack.pop();
+      } else {
+        return false;
+      }
+    }
+  }
+  return stack.length === 0;
 }
 
 /**
@@ -36,7 +50,16 @@ function isValidParentheses(s) {
  */
 function simplifyPath(path) {
   // TODO: 用栈保存有效目录名，遇到 .. 就返回上一级
-  return "";
+  let stack = [];
+  let paths = path.split('/');
+  for (let i = 0; i < paths.length; i++) {
+    if (paths[i] === '..') {
+      stack.pop();
+    } else if (paths[i] !== '.' && paths[i] !== '') {
+      stack.push(paths[i]);
+    }
+  }
+  return '/' + stack.join('/');
 }
 
 /**
@@ -54,7 +77,15 @@ function simplifyPath(path) {
  */
 function removeAdjacentDuplicates(s) {
   // TODO: 当前字符和栈顶相同就弹栈，否则入栈
-  return "";
+  let stack = [];
+  for (let i = 0; i < s.length; i++) {
+    if (stack.length > 0 && stack[stack.length - 1] === s[i]) {
+      stack.pop();
+    } else {
+      stack.push(s[i]);
+    }
+  }
+  return stack.join('');
 }
 
 /**
@@ -73,7 +104,16 @@ function removeAdjacentDuplicates(s) {
  */
 function dailyTemperatures(temperatures) {
   // TODO: 用单调栈保存还没找到更高温度的下标
-  return [];
+  let stack = [];
+  let result = new Array(temperatures.length).fill(0);
+  for (let i = 0; i < temperatures.length; i++) {
+    while (stack.length > 0 && temperatures[stack[stack.length - 1]] < temperatures[i]) {
+      result[stack[stack.length - 1]] = i - stack[stack.length - 1];
+      stack.pop();
+    }
+    stack.push(i);
+  }
+  return result;
 }
 
 const tests = [
