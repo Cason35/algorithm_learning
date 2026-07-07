@@ -164,3 +164,87 @@ npm run day9
 6. 为什么不用 `shift()`，或者为什么 `shift()` 在这里可以接受？
 
 你写完后告诉我，我会批改 Day 9，并把总结追加到这里。
+
+## 10. 批改总结（2026-07-07）
+
+### 自测结果
+
+`npm run day9` 通过：`12/12 tests passed`。
+
+### 掌握情况
+
+你已经能用队列思路完成题目，功能样例全部通过。尤其是 `maxSlidingWindow` 里，你已经能想到“队列里存下标，队头表示当前窗口最大值下标”，这是单调队列最重要的直觉。
+
+四个函数的完成情况：
+
+1. `recentRequestCounts(times, windowSize)`：功能通过，但用了 `queue.shift()` 移除过期请求。JS 数组的 `shift()` 会移动后续元素，可能让整体复杂度退化。
+2. `movingAverage(values, size)`：功能通过，也维护了 `runningSum`，方向正确；但窗口超长时用了 `queue.shift()`，空间和时间复杂度都可以更稳。
+3. `countStudentsUnableToEat(students, sandwiches)`：通过。题目允许 `O(n^2)` 模拟，所以当前写法可以接受；如果想优化，可以直接统计 0/1 学生数量。
+4. `maxSlidingWindow(nums, k)`：功能通过，单调队列逻辑正确；但移除过期下标时用了 `queue.shift()`，不符合我们 Day 9 刻意练的 `head` 指针写法。
+
+### 需要二次修改的点
+
+Day 9 的核心训练点是：不要用 `shift()` 做频繁出队。
+
+`recentRequestCounts` 可以这样改：
+
+```js
+const queue = [];
+let head = 0;
+
+queue.push(time);
+while (head < queue.length && queue[head] < time - windowSize) {
+  head++;
+}
+result.push(queue.length - head);
+```
+
+`movingAverage` 也可以用 `head` 指针：
+
+```js
+queue.push(value);
+runningSum += value;
+
+if (queue.length - head > size) {
+  runningSum -= queue[head];
+  head++;
+}
+
+result.push(runningSum / (queue.length - head));
+```
+
+`maxSlidingWindow` 的单调队列也建议用 `head` 表示有效队头：
+
+```js
+while (head < deque.length && deque[head] <= i - k) {
+  head++;
+}
+```
+
+队尾仍然可以用 `pop()`，因为 `pop()` 是 `O(1)`。
+
+### 今天真正学到的东西
+
+队列题不只是“先进先出”，还要在 JS 里注意实现成本。
+
+- `push()` / `pop()` 通常是 `O(1)`。
+- `shift()` 会移动数组元素，不适合频繁出队。
+- `head` 指针可以把出队变成逻辑移动。
+- 单调队列本质上是“队头管窗口最大值，队尾维护单调性”。
+
+功能过样例是第一步；队列题真正达标，还要看出队是否保持线性复杂度。
+
+### 二次修改复批
+
+二次修改后再次运行 `npm run day9`，结果通过：`12/12 tests passed`。
+
+这次主要问题已经修好：
+
+1. `recentRequestCounts(times, windowSize)`：已经改成 `head` 指针逻辑出队，不再用 `shift()` 移除过期请求，时间复杂度达标。
+2. `movingAverage(values, size)`：已经用 `head` 指针移除旧值，并继续维护 `runningSum`，避免每次重新求和。
+3. `countStudentsUnableToEat(students, sandwiches)`：也改成了队头指针和三明治指针，避免了频繁 `shift()`；模拟思路仍然清晰。
+4. `maxSlidingWindow(nums, k)`：已经用 `head` 指针处理过期下标，队尾仍然用 `pop()` 维护单调性，单调队列核心逻辑正确。
+
+还有一个更细的工程点：`head++` 是逻辑出队，数组里的旧元素不会立刻消失。对 `recentRequestCounts` 这种目标空间本来是 `O(n)` 的题没有问题；但 `movingAverage` 和 `maxSlidingWindow` 如果严格要求物理空间保持 `O(size)` / `O(k)`，可以进一步用循环数组，或者在 `head` 很大时做一次压缩。
+
+当前阶段你已经掌握了队列题最关键的复杂度意识：不要在 JS 里频繁用 `shift()` 当出队。
