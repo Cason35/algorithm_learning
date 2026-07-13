@@ -24,7 +24,15 @@ class ListNode {
  */
 function reverseList(head) {
   // TODO: 用 prev / current / next 三个指针反转 next 指向
-  return null;
+  let prev = null;
+  let current = head;
+  while (current !== null) {
+    const next = current.next;
+    current.next = prev;
+    prev = current;
+    current = next;
+  }
+  return prev;
 }
 
 /**
@@ -43,7 +51,13 @@ function reverseList(head) {
  */
 function middleNode(head) {
   // TODO: slow 每次走一步，fast 每次走两步
-  return null;
+  let slow = head;
+  let fast = head;
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  return slow;
 }
 
 /**
@@ -62,7 +76,20 @@ function middleNode(head) {
  */
 function mergeTwoSortedLists(list1, list2) {
   // TODO: 使用 dummy 节点和 tail 指针逐个接上较小节点
-  return null;
+  let dummy = new ListNode();
+  let tail = dummy;
+  while (list1 !== null && list2 !== null) {
+    if (list1.val < list2.val) {
+      tail.next = list1;
+      list1 = list1.next;
+    } else {
+      tail.next = list2;
+      list2 = list2.next;
+    }
+    tail = tail.next;
+  }
+  tail.next = list1 !== null ? list1 : list2;
+  return dummy.next;
 }
 
 /**
@@ -81,7 +108,19 @@ function mergeTwoSortedLists(list1, list2) {
  */
 function removeNthFromEnd(head, n) {
   // TODO: 使用 dummy + 快慢指针，让 slow 停在待删除节点前一个位置
-  return head;
+  let dummy = new ListNode();
+  dummy.next = head;
+  let slow = dummy;
+  let fast = head;
+  for (let i = 0; i < n; i++) {
+    fast = fast.next;
+  }
+  while (fast !== null) {
+    slow = slow.next;
+    fast = fast.next;
+  }
+  slow.next = slow.next.next;
+  return dummy.next;
 }
 
 function buildList(values) {
