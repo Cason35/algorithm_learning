@@ -16,6 +16,18 @@ const assert = require("node:assert/strict");
  */
 function binarySearch(nums, target) {
   // TODO: 使用闭区间 [left, right] 进行二分查找
+  let left = 0;
+  let right = nums.length - 1;
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    if (nums[mid] === target) {
+      return mid;
+    } else if (nums[mid] < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
   return -1;
 }
 
@@ -33,7 +45,19 @@ function binarySearch(nums, target) {
  */
 function searchInsert(nums, target) {
   // TODO: 找第一个大于等于 target 的位置
-  return 0;
+  let left = 0;
+  let right = nums.length - 1;
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    if (nums[mid] === target) {
+      return mid;
+    } else if (nums[mid] < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+  return left;
 }
 
 /**
@@ -50,7 +74,19 @@ function searchInsert(nums, target) {
  */
 function firstOccurrence(nums, target) {
   // TODO: 用左边界二分，最后检查 nums[left] 是否等于 target
-  return -1;
+  let left = 0;
+  let right = nums.length - 1;
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    if (nums[mid] === target) {
+      right = mid - 1;
+    } else if (nums[mid] < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+  return nums[left] === target ? left : -1;
 }
 
 /**
@@ -69,7 +105,17 @@ function firstOccurrence(nums, target) {
  */
 function integerSqrt(x) {
   // TODO: 在答案范围里二分，找最大的 mid 使 mid * mid <= x
-  return 0;
+  let left = 0;
+  let right = x;
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    if (mid * mid <= x) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+  return right;
 }
 
 const tests = [
