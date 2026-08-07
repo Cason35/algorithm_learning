@@ -14,7 +14,9 @@ const assert = require("node:assert/strict");
  */
 function sortNumbersAsc(nums) {
   // TODO: 注意 JS sort 默认按字符串排序，并且会修改原数组
-  return [];
+  let result = [...nums];
+  result.sort((a, b) => a - b);
+  return result;
 }
 
 /**
@@ -31,7 +33,28 @@ function sortNumbersAsc(nums) {
  */
 function mergeSortedArrays(nums1, nums2) {
   // TODO: 使用两个指针从左到右合并
-  return [];
+  let result = [];
+  let i = 0;
+  let j = 0;
+  while (i < nums1.length && j < nums2.length) {
+    if (nums1[i] < nums2[j]) {
+      result.push(nums1[i]);
+      i++;
+    }
+    else {
+      result.push(nums2[j]);
+      j++;
+    }
+  }
+  while (i < nums1.length) {
+    result.push(nums1[i]);
+    i++;
+  }
+  while (j < nums2.length) {
+    result.push(nums2[j]);
+    j++;
+  }
+  return result;
 }
 
 /**
@@ -46,7 +69,14 @@ function mergeSortedArrays(nums1, nums2) {
  */
 function mergeSort(nums) {
   // TODO: 递归拆分数组，再复用 mergeSortedArrays 合并
-  return [];
+  let result = [...nums];
+  if (result.length <= 1) {
+    return result;
+  }
+  let mid = Math.floor(result.length / 2);
+  let left = result.slice(0, mid);
+  let right = result.slice(mid);
+  return mergeSortedArrays(mergeSort(left), mergeSort(right));
 }
 
 /**
@@ -61,7 +91,15 @@ function mergeSort(nums) {
  */
 function quickSort(nums) {
   // TODO: 选择 pivot，把数组分成小于、等于、大于三部分后递归
-  return [];
+  let result = [...nums];
+  if (result.length <= 1) {
+    return result;
+  }
+  let pivot = result[Math.floor(result.length / 2)];
+  let left = result.filter(x => x < pivot);
+  let mid = result.filter(x => x === pivot);
+  let right = result.filter(x => x > pivot);
+  return [...quickSort(left), ...mid, ...quickSort(right)];
 }
 
 const tests = [
