@@ -204,3 +204,54 @@ npm run day13
 6. 时间和空间复杂度分别是多少？
 
 写完后告诉我，我会批改 Day 13，并把学习总结追加到这里。
+
+## 10. 批改总结（2026-08-07）
+
+### 测试结果
+
+`npm run day13` 全部通过：`12/12 tests passed`。
+
+额外检查了较大阶乘、包含小数和负数的数组和、零底数、负底数、奇偶指数、空嵌套数组以及输入不变性，功能结果也全部正确。
+
+### 完成情况
+
+1. `factorial(n)`：通过。`n === 0` 是明确的终止条件，每层把问题缩小为 `n - 1`，时间和调用栈空间都是 `O(n)`。
+2. `recursiveSum(nums)`：通过。使用内部函数和下标推进，没有在每层复制数组，时间 `O(n)`、调用栈空间 `O(n)`，也没有修改输入。
+3. `fastPower(base, exponent)`：功能通过，复杂度未达标。偶数分支把 `fastPower(base, exponent / 2)` 完整计算了两次，递推式是 `T(n) = 2T(n/2) + O(1)`，因此时间复杂度为 `O(n)`，不是目标 `O(log n)`。
+4. `flattenArray(items)`：功能通过，复杂度未达标。每次 `concat` 都会复制已有累计结果；对于很长的扁平数组，复制量会形成 `1 + 2 + ... + n`，最坏时间达到 `O(n²)`。
+
+### 需要二次修改的点
+
+快速幂应当只计算一次一半的幂，然后复用：
+
+```js
+const half = fastPower(base, Math.floor(exponent / 2));
+
+if (exponent % 2 === 0) {
+  return half * half;
+}
+
+return half * half * base;
+```
+
+展开嵌套数组时，可以只创建一个结果数组，让所有递归层向同一个结果中 `push`：
+
+```js
+const result = [];
+
+function visit(values) {
+  for (const value of values) {
+    if (Array.isArray(value)) {
+      visit(value);
+    } else {
+      result.push(value);
+    }
+  }
+}
+```
+
+这样每个元素只处理一次，时间复杂度就是 `O(n)`。
+
+### 今天真正学到的东西
+
+递归实现不仅要检查“能否到达终止条件”，还要检查“同一个子问题是否被重复计算”和“每层是否在复制越来越大的数据”。功能测试通过只说明答案正确；递推式、递归深度和每层工作量共同决定它是否真正达到复杂度目标。

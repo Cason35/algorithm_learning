@@ -15,7 +15,10 @@ const assert = require("node:assert/strict");
  */
 function factorial(n) {
   // TODO: 先写终止条件，再把问题缩小为 factorial(n - 1)
-  return undefined;
+  if (n === 0) {
+    return 1;
+  }
+  return n * factorial(n - 1);
 }
 
 /**
@@ -31,7 +34,13 @@ function factorial(n) {
  */
 function recursiveSum(nums) {
   // TODO: 可以定义一个 sumFrom(index) 辅助函数
-  return undefined;
+  function sumFrom(index) {
+    if (index === nums.length) {
+      return 0;
+    }
+    return nums[index] + sumFrom(index + 1);
+  }
+  return sumFrom(0);
 }
 
 /**
@@ -49,7 +58,13 @@ function recursiveSum(nums) {
  */
 function fastPower(base, exponent) {
   // TODO: 递归计算一半的幂并保存结果，再根据 exponent 的奇偶性组合答案
-  return undefined;
+  if (exponent === 0) {
+    return 1;
+  }
+  if (exponent % 2 === 0) {
+    return fastPower(base, exponent / 2) * fastPower(base, exponent / 2);
+  }
+  return base * fastPower(base, exponent - 1);
 }
 
 /**
@@ -70,7 +85,15 @@ function fastPower(base, exponent) {
  */
 function flattenArray(items) {
   // TODO: 遍历 items；数字直接加入结果，数组则递归展开
-  return undefined;
+  function flatten(items) {
+    return items.reduce((acc, item) => {
+      if (Array.isArray(item)) {
+        return acc.concat(flatten(item));
+      }
+      return acc.concat(item);
+    }, []);
+  }
+  return flatten(items);
 }
 
 const tests = [
