@@ -76,6 +76,7 @@ npm run day12
 npm run day13
 npm run day14
 npm run day15
+npm run day16
 ```
 
 或者直接：
@@ -96,6 +97,7 @@ node day12/work.js
 node day13/work.js
 node day14/work.js
 node day15/work.js
+node day16/work.js
 ```
 
 第一次运行通常会失败，因为函数里留了 TODO。你完成实现后再运行，全部通过后告诉我：

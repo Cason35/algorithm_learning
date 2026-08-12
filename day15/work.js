@@ -36,7 +36,15 @@ class TreeNode {
  */
 function preorderTraversal(root) {
   // TODO: 在递归处理左右子树之前记录当前节点
-  return undefined;
+  let result = [];
+  function traverse(node) {
+    if (node === null) return;
+    result.push(node.value);
+    traverse(node.left);
+    traverse(node.right);
+  }
+  traverse(root);
+  return result;
 }
 
 /**
@@ -65,7 +73,15 @@ function preorderTraversal(root) {
  */
 function inorderTraversal(root) {
   // TODO: 在左子树处理完成后、右子树处理前记录当前节点
-  return undefined;
+  let result = [];
+  function traverse(node) {
+    if (node === null) return;
+    traverse(node.left);
+    result.push(node.value);
+    traverse(node.right);
+  }
+  traverse(root);
+  return result;
 }
 
 /**
@@ -94,7 +110,15 @@ function inorderTraversal(root) {
  */
 function postorderTraversal(root) {
   // TODO: 在左右子树都处理完成后记录当前节点
-  return undefined;
+  let result = [];
+  function traverse(node) {
+    if (node === null) return;
+    traverse(node.left);
+    traverse(node.right);
+    result.push(node.value);
+  }
+  traverse(root);
+  return result;
 }
 
 /**
@@ -124,7 +148,8 @@ function postorderTraversal(root) {
  */
 function maxDepth(root) {
   // TODO: 空树返回 0；非空树返回 1 + 左右子树深度的较大值
-  return undefined;
+  if (root === null) return 0;
+  return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
 }
 
 /**
