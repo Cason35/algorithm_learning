@@ -1,0 +1,22 @@
+schema_version: 1
+subject_id: algorithm
+repo_slug: algorithm_learning
+title: JavaScript 算法学习
+goal: 完成 35 天算法路线，并能独立实现、测试和讲解常见算法题
+timezone: Asia/Shanghai
+weekly_budget_minutes: 90
+roadmap: README.md
+progress: PROGRESS.md
+state: learning-state.yml
+next_task: NEXT_TASK.md
+paths:
+  lesson_pattern: day*/class_schedule.md
+  submission_pattern: day*/work.js
+allowed_task_minutes: [20, 70, 90, 150]
+max_active_tasks: 1
+candidate_task_count: 1
+evidence_policy:
+  require_tests: true
+  require_explanation: true
+  completion_is_not_mastery: true
+

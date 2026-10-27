@@ -1,0 +1,32 @@
+schema_version: 1
+updated_at: 2026-10-27T18:00:00+08:00
+phase: first_pass
+current_task_id: ALG-016
+last_completed_task_id: ALG-015
+weekly_budget_minutes: 90
+roadmap_position:
+  completed_through: day15
+  current: day16-bfs
+  next: day17-dfs
+mastery:
+  day01_to_day15:
+    value: practiced
+    evidence: 已有对应课程、作业与提交历史；尚需间隔复习验证长期掌握
+  bfs:
+    value: not_yet_demonstrated
+    evidence: day16/work.js 当前保留 TODO，基线为 0/12
+weaknesses: []
+reviews_due: []
+coverage:
+  completed:
+    - complexity-hash
+    - array-string
+    - two-pointers-sliding-window-prefix-sum
+    - stack-queue-linked-list-binary-search-sort-recursion
+    - tree-basics
+  current: [bfs]
+  upcoming: [dfs, bst, heap, trie, graph, backtracking, greedy, dynamic-programming]
+notes:
+  - “完成第一轮”仅表示已有实现和提交，不自动等同于掌握。
+  - ALG-016 完成后依据测试、代码和口述证据生成下一任务。
+
