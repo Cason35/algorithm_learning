@@ -6,9 +6,9 @@
 
 ## 固定闭环
 
-1. 读取 `NEXT_TASK.md`、`learning-state.yml`、对应 Day 的课程与作业，以及最近一次提交。
+1. 读取 `study.yml`、`NEXT_TASK.md`、`learning-state.yml`、`PROGRESS.md`、对应 Day 的课程、代码作业、作答单以及最近一次批改。
 2. 先运行任务指定的测试，只依据代码、测试输出和学习者讲解判断表现。
-3. 先给出批改与证据，再更新 `PROGRESS.md` 和 `learning-state.yml`。
+3. 先把批改与证据保存到 `reviews/ALG-xxx.md`，再更新 `PROGRESS.md` 和 `learning-state.yml`。
 4. 根据结果决定补救、间隔复习、同类迁移或进入 `README.md` 的下一主题。
 5. 每次只保留一个正式任务和一个候选任务；正式任务写入 `NEXT_TASK.md`。
 
@@ -26,4 +26,25 @@
 - 当前路线以 `README.md` 的 35 天计划为准，不因只补错题而遗漏尚未覆盖的主题。
 - 当前作业运行方式以 `package.json` 中对应的 `npm run dayN` 为准。
 - 不覆盖历史代码、测试或学习总结；更正通过新的提交和批改记录保留轨迹。
+- 网站保存 `work.js` 只能作为代码提交证据，不得在服务器执行学习者代码；测试必须在可信的本地环境运行。
+
+## Git 与变更流程
+
+- 开始修改前运行 `git status --short --branch`，先识别并保留用户已有修改。
+- 只有工作区干净、当前分支存在上游且未分叉时，才可执行 `git pull --ff-only`。
+- 有本地修改、未跟踪文件或分支分叉时跳过拉取并说明原因；不得自动 stash、rebase、merge、reset 或覆盖文件。
+- 除非用户明确要求，不得自行 commit 或 push。
+
+## Specs 变更记录
+
+- 仓库规则、训练路线、目录结构、测试机制、自动化或批量课程内容发生变化时，必须创建或更新 `specs/YYYY-MM-DD-<topic>.md`。
+- 日常作业实现、单次批改和进度更新继续保存在对应 Day、`PROGRESS.md` 与 `learning-state.yml`，无需重复创建 spec，除非同时改变规则或结构。
+- 开始修改时先写背景、范围、方案和验收标准；完成后补齐实际修改、验证结果、风险与回滚方式。
+- 使用 `specs/_template.md`；同一任务只维护一份 spec，并与对应变更一起提交。
+
+## 变更验证
+
+- 修改某日课程或作业时运行对应 `npm run dayN`；不要为了无关文档变更运行所有天数。
+- 修改路线、任务或状态时，检查 `README.md`、`NEXT_TASK.md`、`PROGRESS.md` 和 `learning-state.yml` 的主题、天数及 active 任务一致。
+- 测试失败时区分预留 TODO 导致的预期失败、既有失败和本次引入的失败，并在 spec 中如实记录。
 

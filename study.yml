@@ -10,8 +10,12 @@ progress: PROGRESS.md
 state: learning-state.yml
 next_task: NEXT_TASK.md
 paths:
-  lesson_pattern: day*/class_schedule.md
-  submission_pattern: day*/work.js
+  lessons: day*/class_schedule.md
+  submissions: day*/work.js
+  platform_submissions: evidence/submissions/
+  worksheets: day*/worksheet.md
+  reviews: reviews/
+  resources: resources/catalog.yml
 allowed_task_minutes: [20, 70, 90, 150]
 max_active_tasks: 1
 candidate_task_count: 1

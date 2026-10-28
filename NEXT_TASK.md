@@ -12,6 +12,7 @@ generated_from: [ALG-015]
 why_now: Day 1–15 已完成第一轮；BFS 是从树遍历过渡到图搜索和无权最短路的关键连接点，当前 Day 16 测试基线为 0/12。
 deliverables:
   - day16/work.js
+  - day16/worksheet.md
   - npm run day16 的 12/12 通过结果
   - 对“队列里每个元素代表什么”的口述说明
 definition_of_done:
@@ -55,4 +56,4 @@ npm run day16
 3. `visited` 为什么要在入队时标记。
 4. BFS 为什么能得到无权图最短步数。
 
-完成后提交代码，并告诉教练“ALG-016 已完成，帮我批改”；批改通过后再更新学习状态并生成下一任务。
+把讲题说明、测试结果和实际用时记录到 `day16/worksheet.md`。完成后告诉教练“ALG-016 已完成，帮我批改”；批改先保存到 `reviews/ALG-016.md`，再依据证据更新学习状态并生成下一任务。

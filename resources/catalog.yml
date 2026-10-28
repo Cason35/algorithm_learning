@@ -1,0 +1,10 @@
+schema_version: 1
+resources: []
+policy:
+  commit_external_problem_statements: false
+  commit_copyrighted_solutions: false
+  record_links_and_personal_notes: true
+  forbidden:
+    - passwords
+    - api_keys
+    - private_personal_identifiers
