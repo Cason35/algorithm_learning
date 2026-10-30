@@ -1,3 +1,6 @@
+---
+id: fc13bc37c8ef59f4ac865d9d3dc74355
+---
 # algorithm_learning
 
 前端工程师算法训练营，使用 JavaScript 刷主流算法题。

@@ -1,26 +1,55 @@
-schema_version: 1
-subject_id: algorithm
-repo_slug: algorithm_learning
+schema_version: 2
+id: algorithm
 title: JavaScript 算法学习
 goal: 完成 35 天算法路线，并能独立实现、测试和讲解常见算法题
-timezone: Asia/Shanghai
-weekly_budget_minutes: 90
-roadmap: README.md
-progress: PROGRESS.md
-state: learning-state.yml
-next_task: NEXT_TASK.md
+lifecycle: active
+target_window: null
+target_status: open
+repository:
+  slug: algorithm_learning
+  visibility: local-only
+  web_url: null
 paths:
-  lessons: day*/class_schedule.md
-  submissions: day*/work.js
-  platform_submissions: evidence/submissions/
-  worksheets: day*/worksheet.md
-  reviews: reviews/
-  resources: resources/catalog.yml
-allowed_task_minutes: [20, 70, 90, 150]
-max_active_tasks: 1
-candidate_task_count: 1
+  lessons:
+    - day*/class_schedule.md
+  submissions:
+    - day*/work.js
+    - day*/worksheet.md
+  reviews:
+    - reviews/
+  current_task: NEXT_TASK.md
+  progress: PROGRESS.md
+  state: learning-state.yml
+  platform_submissions:
+    - evidence/submissions/
+  resources:
+    - resources/catalog.yml
+  roadmap: README.md
+capabilities:
+  - content.read
+  - answer.inline
+  - review.read
+  - progress.track
+  - rag.search
+  - code.edit
+  - visualizer.sorting
+  - visualizer.graph
+schedule:
+  timezone: Asia/Shanghai
+  weekly_budget_minutes: 90
+task_policy:
+  allowed_minutes: [20, 70, 90, 150]
+  max_active_tasks: 1
+  candidate_task_count: 1
+content_policy:
+  private_materials_in_git: false
+  personal_evidence_in_git: true
+  raw_media_in_git: false
+  private_media_storage: not_applicable
 evidence_policy:
-  require_tests: true
-  require_explanation: true
   completion_is_not_mastery: true
-
+  requirements:
+    - explanation
+    - tests
+tags:
+  - migrated-v1
