@@ -1,11 +1,12 @@
 ---
 schema_version: 1
 id: ALG-016
+subject_id: algorithm
 title: Day 16 BFS：从队列含义到最短路
 status: active
-type: implementation_and_explanation
+type: new_lesson
 estimated_minutes: 70
-scheduled_at: 2026-10-29T21:30:00+08:00
+scheduled_at: "2026-10-29T21:30:00+08:00"
 skills: [bfs, queue, tree-level-order, shortest-path, complexity-analysis]
 roadmap_ref: README.md#35-天路线图
 generated_from: [ALG-015]
@@ -21,6 +22,8 @@ definition_of_done:
   - 说明树 BFS 与网格 BFS 中队列元素分别代表什么
   - 说明为何在邻居入队时标记 visited，以及为何第一次到达目标就是最短路
   - 能给出四个实现的时间与空间复杂度，并确认没有修改输入树或网格
+candidate_task_id: null
+review_target_path: reviews/ALG-016.md
 ---
 
 # 任务说明

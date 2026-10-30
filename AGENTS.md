@@ -27,6 +27,7 @@
 - 当前作业运行方式以 `package.json` 中对应的 `npm run dayN` 为准。
 - 不覆盖历史代码、测试或学习总结；更正通过新的提交和批改记录保留轨迹。
 - 网站保存 `work.js` 只能作为代码提交证据，不得在服务器执行学习者代码；测试必须在可信的本地环境运行。
+- 生成或更新 `NEXT_TASK.md` 时必须符合平台 `task-front-matter` v1：`subject_id` 固定为 `algorithm`，使用通用任务类型，时间写成带时区的字符串，并显式声明安全的 `review_target_path`。
 
 ## Git 与变更流程
 
